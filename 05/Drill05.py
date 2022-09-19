@@ -24,6 +24,7 @@ def restart():
     turtle.reset()
 
 turtle.shape('turtle')
+turtle.stamp()
 turtle.onkey(turtle_move_up, 'w')
 turtle.onkey(turtle_move_right, 'd')
 turtle.onkey(turtle_move_left, 'a')
