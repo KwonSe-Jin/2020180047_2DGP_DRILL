@@ -1,15 +1,16 @@
 from pico2d import *
 import os
 os.chdir('C:\\Users\\sejin\\Documents\\GitHub\\2020180047_2DGP_DRILL\\Project\\resource')
-grass_WIDTH, grass_HEIGHT = 800, 600
-x = grass_WIDTH // 2
-y = grass_WIDTH // 2
 
+from pico2d import *
+
+TUK_WIDTH, TUK_HEIGHT = 1280, 1024
+x = TUK_WIDTH // 2
+y = TUK_WIDTH // 2
 frame = 0
 dirX = 0
-dirY = 0
 state = 3
-dir_state = 0
+dirY = 0
 
 def handle_events():
     global running
@@ -17,7 +18,6 @@ def handle_events():
     global dirY
     global state
     events = get_events()
-
     for event in events:
         if event.type == SDL_QUIT:
             running = False
@@ -30,92 +30,40 @@ def handle_events():
                 state = 0
             elif event.key == SDLK_UP:
                 dirY += 1
-                if state == 2:
-                    state = 0
-                if state == 3:
-                    state = 1
+                state = 1
             elif event.key == SDLK_DOWN:
                 dirY -= 1
-                if state == 2:
-                    state = 0
-                if state == 3:
-                    state = 1
+                state = 0
             elif event.key == SDLK_ESCAPE:
                 running = False
-
         elif event.type == SDL_KEYUP:
             if event.key == SDLK_RIGHT:
                 dirX -= 1
-                state = 3
             elif event.key == SDLK_LEFT:
                 dirX += 1
-                state = 2
             elif event.key == SDLK_UP:
                 dirY -= 1
-                if state == 0:
-                    state = 2
-                if state == 1:
-                    state = 3
             elif event.key == SDLK_DOWN:
                 dirY += 1
-                if state == 0:
-                    state = 2
-                if state == 1:
-                    state = 3
 
-open_canvas(grass_WIDTH, grass_HEIGHT)
-TUK_GROUND = load_image('grass.png')
-character = load_image('pika_0_0.png')
-character1 = load_image('pika_0_1.png')
-character2 = load_image('pika_0_2.png')
-character3 = load_image('pika_0_3.png')
-character4 = load_image('pika_0_4.png')
+open_canvas(TUK_WIDTH, TUK_HEIGHT)
+TUK_GROUND = load_image('TUK_GROUND.png')
+character = load_image('Pikachu.png')
 
 running = True
 
-a = 0
 while running:
-    if a == 0:
-        clear_canvas_now()
-        TUK_GROUND.draw_now(grass_WIDTH // 2, grass_HEIGHT)
-        character.draw_now(x, y , 100, 100)
+        clear_canvas()
+        TUK_GROUND.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
+        character.clip_draw(frame * 64, 64 * state, 64, 64, x, y)
         update_canvas()
         handle_events()
-        a = 1
-        # delay(0.01)
-    elif a == 1:
-        clear_canvas_now()
-        TUK_GROUND.draw_now(grass_WIDTH // 2, grass_HEIGHT)
-        character1.draw_now(x, y, 100, 100)
-        update_canvas()
-        handle_events()
-        a = 2
-        # delay(0.01)
-    elif a == 2:
-        clear_canvas_now()
-        TUK_GROUND.draw_now(grass_WIDTH // 2, grass_HEIGHT)
-        character2.draw_now(x, y, 100, 100)
-        update_canvas()
-        handle_events()
-        a = 3
-        # delay(0.01)
-    elif a == 3:
-        clear_canvas_now()
-        TUK_GROUND.draw_now(grass_WIDTH // 2, grass_HEIGHT)
-        character3.draw_now(x, y, 100, 100)
-        update_canvas()
-        handle_events()
-        a = 4
+        frame = (frame + 1) % 5
+        x += dirX * 5
+        y += dirY * 5
+        delay(0.1)
+        if ((x > TUK_WIDTH or y > TUK_HEIGHT - 90) or (x < 0 or y < 90)):
 
-    elif a == 4:
-        clear_canvas_now()
-        TUK_GROUND.draw_now(grass_WIDTH // 2, grass_HEIGHT)
-        character4.draw_now(x, y, 100, 100)
-        update_canvas()
-        handle_events()
-        a = 0
-    # update_canvas()
-    x += dirX * 10
-    y += dirY * 10
-    delay(0.05)
+            break
+
 close_canvas()
