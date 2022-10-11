@@ -4,7 +4,7 @@ os.chdir('C:\\Users\\sejin\\Documents\\GitHub\\2020180047_2DGP_DRILL\\Project\\r
 
 from pico2d import *
 
-TUK_WIDTH, TUK_HEIGHT = 1280, 1024
+TUK_WIDTH, TUK_HEIGHT = 1280, 900
 x = TUK_WIDTH // 2
 y = TUK_WIDTH // 2
 R_x = TUK_WIDTH // 2
