@@ -1,12 +1,19 @@
 from pico2d import*
 import os
 os.chdir('C:\\Users\\sejin\\Documents\\GitHub\\2020180047_2DGP_DRILL\\Project\\resource')
+import game_framework
+import title_state
+class Grass:
+    def __init__(self):
+        self.image = load_image('grass.png')
+    def draw(self):
+        self.image.draw(400, 30)
 
 
 class Move:
     def __init__(self):
         self.x = 100
-        self.y = 90
+        self.y = 80
         self.frame = 0
         self.image = load_image('Pikachu.png')
     def update(self, x):
@@ -37,24 +44,38 @@ def handle_events():
         elif event.type == SDL_KEYUP:
                 x = 0
                 state = 0
+        if event.type == SDL_QUIT:
+            game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            game_framework.change_state(title_state)
 
-open_canvas()
-pikachu = Move()
-running = True
+
 x = 0
 state = 0
 
-while running:
-    handle_events()
+pikachu = None
+grass = None
+running = None
+# 초기화
+def enter():
+    global pikachu, grass, running
+    pikachu = Move()
+    grass = Grass()
+    running = True
+# 종료
+def exit():
+    global pikachu, grass
+    del pikachu
+    del grass
+def update():
     pikachu.update(x)
+def draw():
     clear_canvas()
-    # grass.draw()
+    grass.draw()
     pikachu.draw(state)
     update_canvas()
-    delay(0.05)
+    delay(0.08)
 
-# finalization code
-close_canvas()
 
 
 
