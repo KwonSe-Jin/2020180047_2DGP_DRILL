@@ -1,4 +1,7 @@
 from pico2d import *
+import game_framework
+import logo_state
+import title_state
 
 class Grass:
     def __init__(self):
@@ -26,13 +29,13 @@ def handle_events():
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
-            running = False
+            game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            running = False
+            game_framework.change_state(title_state)
 
 boy = None # c = Null
 grass = None
-running = True
+# running = True
 
 
 # 초기화
@@ -57,19 +60,6 @@ def draw():
     grass.draw()
     boy.draw()
     update_canvas()
+    delay(0.1)
 
 
-open_canvas()
-enter()
-
-# game main loop code
-while running:
-    handle_events()
-    update()
-    draw()
-    delay(0.05)
-exit()
-
-
-# finalization code
-close_canvas()
