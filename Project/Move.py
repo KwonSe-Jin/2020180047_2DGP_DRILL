@@ -13,23 +13,23 @@ class Grass:
 class Move:
     def __init__(self):
         self.x = 100
-        self.y = 80
+        self.y = 95
         self.frame = 0
         self.image = load_image('Pikachu.png')
     def update(self, x):
         self.frame = (self.frame + 1) % 5
         self.x += x * 5
-    def draw(self, state):
-        self.state = state
-        if state:
-            self.image.clip_draw(self.frame*64, self.state * 64, 64, 64, self.x, self.y)
+    def draw(self, locate):
+        self.locate = locate
+        if locate:
+            self.image.clip_draw(self.frame*64, self.locate * 64, 64, 64, self.x, self.y, 100, 100)
         else:
-            self.image.clip_draw(0, 320, 64, 64, self.x, self.y)
+            self.image.clip_draw(0, 320, 64, 64, self.x, self.y, 100, 100)
 
 def handle_events():
     global running
     global x
-    global state
+    global locate
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -37,13 +37,13 @@ def handle_events():
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_d:
                 x += 1
-                state = 5
+                locate = 5
             elif event.key == SDLK_a:
                 x -= 1
-                state = 5
+                locate = 5
         elif event.type == SDL_KEYUP:
                 x = 0
-                state = 0
+                locate = 0
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
@@ -51,7 +51,7 @@ def handle_events():
 
 
 x = 0
-state = 0
+locate = 0
 
 pikachu = None
 grass = None
@@ -72,9 +72,9 @@ def update():
 def draw():
     clear_canvas()
     grass.draw()
-    pikachu.draw(state)
+    pikachu.draw(locate)
     update_canvas()
-    delay(0.08)
+    delay(0.03)
 
 
 
