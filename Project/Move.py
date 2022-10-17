@@ -5,9 +5,11 @@ import game_framework
 import title_state
 class Grass:
     def __init__(self):
-        self.image = load_image('grass.png')
+        self.image = load_image('background.png')
+        self.net = load_image('net.png')
     def draw(self):
-        self.image.draw(400, 30)
+        self.image.draw(400, 300)
+        self.net.draw(400, 150)
 
 
 class Move:
@@ -16,42 +18,66 @@ class Move:
         self.y = 95
         self.frame = 0
         self.image = load_image('Pikachu.png')
-    def update(self, x):
+        self.dirx = 0
+        self.diry = 0
+        self.m = 0.5
+        self.v = 0.5
+        self.jump = 0
+        self.F = 0
+        self.locate = 0
+    def update(self):
         self.frame = (self.frame + 1) % 5
-        self.x += x * 5
-    def draw(self, locate):
-        self.locate = locate
-        if locate:
+        self.x += self.dirx * 5
+        if self.jump == 1:
+            if self.v > 0:
+                self.F = (0.5 * self.m * (self.v * self.v))
+            else:
+                self.F = -(0.5 * self.m * (self.v * self.v))
+
+            self.y -= self.F
+            self.v -= 0.1
+    def draw(self):
+        if self.locate:
             self.image.clip_draw(self.frame*64, self.locate * 64, 64, 64, self.x, self.y, 100, 100)
         else:
             self.image.clip_draw(0, 320, 64, 64, self.x, self.y, 100, 100)
 
 def handle_events():
     global running
-    global x
+    global dirx
+    global diry
     global locate
+    global F
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             running = False
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_d:
-                x += 1
-                locate = 5
+                pikachu.dirx += 1
+                pikachu.locate = 5
             elif event.key == SDLK_a:
-                x -= 1
-                locate = 5
+                pikachu.dirx -= 1
+                pikachu.locate = 5
+            elif event.key == SDLK_w:
+                pikachu.jump = 1
+                pikachu.locate = 4
         elif event.type == SDL_KEYUP:
-                x = 0
-                locate = 0
+            if event.key == SDLK_d or event.key == SDLK_a:
+                pikachu.dirx = 0
+                pikachu.locate = 0
+            elif event.key == SDLK_w:
+                pikachu.jump = 0
+
+        if pikachu.x < 30:
+            pikachu.dirx = 0
+            if pikachu.locate == 4:
+                pikachu.dirx += 1
+
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(title_state)
-
-
-x = 0
-locate = 0
 
 pikachu = None
 grass = None
@@ -68,11 +94,11 @@ def exit():
     del pikachu
     del grass
 def update():
-    pikachu.update(x)
+    pikachu.update()
 def draw():
     clear_canvas()
     grass.draw()
-    pikachu.draw(locate)
+    pikachu.draw()
     update_canvas()
     delay(0.03)
 
