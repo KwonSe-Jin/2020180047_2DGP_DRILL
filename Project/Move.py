@@ -131,7 +131,7 @@ def draw():
     pikachu.draw()
     pikachu2.draw()
     update_canvas()
-    delay(0.05)
+    delay(0.03)
 
 
 
