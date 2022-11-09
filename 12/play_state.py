@@ -30,38 +30,38 @@ def enter():
     game_world.add_object(boy, 1)
     game_world.add_object(grass2, 2)
 
-# 종료
-def exit():
-    global boy, grass
-    del boy
-    del grass
+# 종료def exit():
+#     global boy, grass
+#     del boy
+#     del grass
+#
+# def update():
+#     for game_object in game_world.all_objects():
+#         game_object.update()
+# def draw_world():
+#     for game_object in game_world.all_objects():
+#         game_object.draw()
+# def draw():
+#     clear_canvas()
+#     draw_world()
+#     update_canvas()
+#
+# def pause():
+#     pass
+#
+# def resume():
+#     pass
+#
+#
+#
+#
+# def test_self():
+#     import play_state
+#
+#     pico2d.open_canvas()
+#     game_framework.run(play_state)
+#     pico2d.clear_canvas()
+#
+# if __name__ == '__main__':
+#     test_self()
 
-def update():
-    for game_object in game_world.all_objects():
-        game_object.update()
-def draw_world():
-    for game_object in game_world.all_objects():
-        game_object.draw()
-def draw():
-    clear_canvas()
-    draw_world()
-    update_canvas()
-
-def pause():
-    pass
-
-def resume():
-    pass
-
-
-
-
-def test_self():
-    import play_state
-
-    pico2d.open_canvas()
-    game_framework.run(play_state)
-    pico2d.clear_canvas()
-
-if __name__ == '__main__':
-    test_self()
