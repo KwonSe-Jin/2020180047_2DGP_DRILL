@@ -148,7 +148,6 @@ class Boy:
     def draw(self):
         self.cur_state.draw(self)
         self.font.draw(self.x - 60, self.y + 50, f'(Time: {get_time():.2f})', (255, 0, 0))
-
     def add_event(self, event):
         self.event_que.insert(0, event)
 

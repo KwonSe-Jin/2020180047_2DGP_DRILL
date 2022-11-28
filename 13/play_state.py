@@ -17,8 +17,8 @@ def handle_events():
             game_framework.quit()
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
             game_framework.quit()
-        # else:
-        #     boy.handle_event(event)
+        else:
+            boy.handle_event(event)
 
 
 # 초기화
@@ -28,8 +28,8 @@ def enter():
     grass = Grass()
     birds = [Bird() for i in range(10)]
     game_world.add_object(grass, 0)
-    #game_world.add_object(boy)
-    game_world.add_objects(birds, 1)
+    game_world.add_object(boy, 1)
+    game_world.add_objects(birds, 2)
 
 # 종료
 def exit():
