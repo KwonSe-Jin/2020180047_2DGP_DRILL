@@ -66,8 +66,8 @@ class WalkingState:
         boy.x += boy.x_velocity * game_framework.frame_time
         boy.y += boy.y_velocity * game_framework.frame_time
 
-        # boy.x = clamp(0+50,  boy.x, server.background.w-50)
-        # boy.y = clamp(0+50,  boy.y, server.background.h-50)
+        boy.x = clamp(0+50,  boy.x, server.background.w-50)
+        boy.y = clamp(0+50,  boy.y, server.background.h-50)
 
 
 

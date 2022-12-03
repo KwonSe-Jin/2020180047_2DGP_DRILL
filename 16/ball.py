@@ -21,7 +21,8 @@ class Ball:
         draw_rectangle(*self.get_bb())
 
     def update(self):
-        self.y -= self.fall_speed * game_framework.frame_time
+        # self.y -= self.fall_speed * game_framework.frame_time
+        pass
 
     def stop(self):
         self.fall_speed = 0
